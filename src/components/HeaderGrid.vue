@@ -2,6 +2,8 @@
   <v-data-table
     :headers="headerHeaders"
     :items="headerItems"
+    :pagination.sync="pagination"
+    hide-actions    
   >
     <template v-slot:items="props">
       <td>
@@ -55,9 +57,10 @@ export default {
   data () {
     return {
       testprop: 0,
+      pagination: {rowsPerPage: -1},
       headerHeaders: [
-        { text: 'Header Name', align: 'left', value: 'headerName' },
-        { text: 'Header Value', value: 'headerValue' }
+        { text: 'Name', align: 'left', value: 'headerName' },
+        { text: 'Value', value: 'headerValue' }
       ],
       headerItems : this.$store.state.headerItems
     }

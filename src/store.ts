@@ -11,16 +11,8 @@ export default new Vuex.Store({
         headerValue: 'application/json'
       },
       {
-        headerName: 'Page-Index',
-        headerValue: '0'
-      },
-      {
-        headerName: 'Page-Size',
-        headerValue: '15'
-      },
-      {
-        headerName: 'Fields',
-        headerValue: "['AccountName', 'AccountID', 'Address']"
+        headerName: 'Origin',
+        headerValue: 'https:\\localhost:8081'
       },
     ],
     parameterItems: [

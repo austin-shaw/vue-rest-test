@@ -2,6 +2,8 @@
   <v-data-table
     :headers="parameterHeaders"
     :items="parameterItems"
+    :pagination.sync="pagination"
+    hide-actions
   >
     <template v-slot:items="props">
       <td>
@@ -25,9 +27,7 @@
       <td class="text-xs-right">
         <v-edit-dialog
           :return-value.sync="props.item.parameterValue"
-
           lazy
-
           @save="save"
           @cancel="cancel"
           @open="open"
@@ -47,6 +47,22 @@
           </template>
         </v-edit-dialog>
       </td>
+
+      <td class="justify-center layout px-0">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(props.item)"
+        >
+          edit
+        </v-icon>
+        <v-icon
+          small
+          @click="deleteItem(props.item)"
+        >
+          delete
+        </v-icon>
+      </td>
     </template>
   </v-data-table>
 </template>
@@ -57,9 +73,10 @@ export default {
   data () {
     return {
       testprop: 0,
+      pagination: {rowsPerPage: -1},
       parameterHeaders: [
-        { text: 'Parameter Name', align: 'left', value: 'parameterName' },
-        { text: 'Parameter Value', value: 'parameterValue' }
+        { text: 'Name', align: 'left', value: 'parameterName' },
+        { text: 'Value', value: 'parameterValue' }
       ],
       parameterItems: this.$store.state.parameterItems
     }

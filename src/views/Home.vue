@@ -50,11 +50,11 @@
               </v-tabs-items>
             </v-tabs>
           </v-card-text>
-
+          
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn v-on:click="clear" color="secondary">Clear</v-btn>
-            <v-btn v-on:click="send" color="primary">Send</v-btn>
+            <v-btn v-on:click="clear" outline color="secondary">Clear</v-btn>
+            <v-btn v-on:click="send" outline color="primary">Send</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -88,7 +88,6 @@ export default {
       url: '',
       data: [],
       errors: [],
-
       method: 'GET',
       methodItems: [
         'GET',
@@ -108,13 +107,25 @@ export default {
     send: function () {
       this.clear()
       
-      axios.get(this.url)
-      .then(response => {
+      axios({
+        method: this.method,
+        url: this.url,
+        // responseType:'stream'
+        headers: this.headers
+      }).then(response => {
         this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2);
       })
       .catch(e => {
         this.errors.push(e)
       })
+      
+      // axios.get(this.url)
+      // .then(response => {
+      //   this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2);
+      // })
+      // .catch(e => {
+      //   this.errors.push(e)
+      // })
     }
   },
   computed: {

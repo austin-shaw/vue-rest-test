@@ -1,46 +1,32 @@
 <template>
-  <v-div>
+  <div>
     <v-data-table
       :headers="headerHeaders"
       :items="headerItems"
       :pagination.sync="pagination"
-      hide-actions    
+      hide-actions
     >
-      <template v-slot:items="props">
+      <template v-slot:items="gridItems">
         <td>
-          <v-edit-dialog
-            :return-value.sync="props.item.headerName"
-            lazy
-            @save="save"
-            @cancel="cancel"
-            @open="open"
-            @close="close"
-          > {{ props.item.headerName }}
+          <v-edit-dialog large :return-value.sync="gridItems.item.headerName">
+            {{ gridItems.item.headerName }}
             <template v-slot:input>
               <v-text-field
-                v-model="props.item.headerName"
+                v-model="gridItems.item.headerName"
                 label="Edit"
                 single-line
+                autofocus
               ></v-text-field>
             </template>
           </v-edit-dialog>
         </td>
         <td class="text-xs-right">
-          <v-edit-dialog
-            :return-value.sync="props.item.headerValue"
-            lazy
-            @save="save"
-            @cancel="cancel"
-            @open="open"
-            @close="close"
-          >
-            <div>{{ props.item.headerValue }}</div>
-            <template v-slot:input>
-              <div class="mt-3 title">Update Header Value</div>
-            </template>
+          <v-edit-dialog large :return-value.sync="gridItems.item.headerValue" >
+            {{ gridItems.item.headerValue }}
+
             <template v-slot:input>
               <v-text-field
-                v-model="props.item.headerValue"
+                v-model="gridItems.item.headerValue"
                 label="Edit"
                 single-line
                 autofocus
@@ -51,7 +37,7 @@
         <td class="justify-center layout px-0">
           <v-icon
             small
-            @click="deleteItem(props.item)"
+            @click="deleteItem(gridItems.item)"
           >
             fas fa-times
           </v-icon>
@@ -63,43 +49,33 @@
       fab
       small
       color="primary"
+      @click="addItem()"
     >
       <v-icon>add</v-icon>
     </v-btn>
-  </v-div>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['testparam', 'options', 'onChange'],
   data () {
     return {
-      testprop: 0,
-      pagination: {rowsPerPage: -1},
+      pagination: { rowsPerPage: -1 },
       headerHeaders: [
-        { text: 'Name', align: 'left', value: 'headerName' },
-        { text: 'Value', value: 'headerValue' }
+        { text: 'Name', align: 'left', sortable: false, value: 'headerName' },
+        { text: 'Value', sortable: false, value: 'headerValue' }
       ],
-      headerItems : this.$store.state.headerItems
+      headerItems: this.$store.state.headerItems
     }
   },
   methods: {
-    save () {
-      console.log('save')
-    },
-    cancel () {
-      console.log('cancel')
-    },
-    open () {
-      console.log('open')
-    },
-    close () {
-      console.log('Dialog closed')
-    },
     deleteItem (item) {
       const index = this.headerItems.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.headerItems.splice(index, 1)
+      this.headerItems.splice(index, 1)
     },
+    addItem () {
+      this.headerItems.push({})
+    }
   }
 }
 </script>

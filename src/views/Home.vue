@@ -13,7 +13,7 @@
                     :items="methodItems"
                     label="Method"
                     required
-                    id="sm-input" 
+                    id="sm-input"
                     class="sm-input"
                   ></v-combobox>
                 </v-flex>
@@ -33,8 +33,8 @@
             <v-tabs
               light
               grow
-              id="sm-input" 
-              class="sm-input" 
+              id="sm-input"
+              class="sm-input"
             >
               <v-tabs-slider color="primary"></v-tabs-slider>
               <v-tab id="sm-input" class="sm-input" href="#tab-1">Headers</v-tab>
@@ -50,7 +50,7 @@
               </v-tabs-items>
             </v-tabs>
           </v-card-text>
-          
+
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn v-on:click="clear" outline color="secondary">Clear</v-btn>
@@ -59,7 +59,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs6 sm6 md6 lg6> 
+      <v-flex xs6 sm6 md6 lg6>
         <v-card class="elevation-2">
           <v-card-text>
             <p>Response</p>
@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
+import axios from 'axios'
 import HeaderGrid from '@/components/HeaderGrid.vue'
 import ParameterGrid from '@/components/ParameterGrid.vue'
 
@@ -89,6 +89,7 @@ export default {
       data: [],
       errors: [],
       method: 'GET',
+      headers: this.$store.state.headerItems,
       methodItems: [
         'GET',
         'POST',
@@ -100,52 +101,54 @@ export default {
     }
   },
   methods: {
-    clear: function (){
-      this.data = [],
+    clear: function () {
+      this.data = []
       this.errors = []
     },
     send: function () {
       this.clear()
-      
+
+      // console.log(this.headers)
+
+      console.log(this.formattedHeaders)
+
       axios({
         method: this.method,
-        url: this.url,
+        url: this.url + this.formattedParameters,
         // responseType:'stream'
-        headers: this.headers
+        headers: this.formattedHeaders
       }).then(response => {
-        this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2);
+        this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2)
       })
-      .catch(e => {
-        this.errors.push(e)
-      })
-      
-      // axios.get(this.url)
-      // .then(response => {
-      //   this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2);
-      // })
-      // .catch(e => {
-      //   this.errors.push(e)
-      // })
+        .catch(e => {
+          this.errors.push(e)
+        })
     }
   },
   computed: {
+    formattedHeaders () {
+      return this.$store.getters.formatHeaders
+    },
+    formattedParameters () {
+      return this.$store.getters.formatParameters
+    },
     layoutBinding () {
       const binding = {}
 
-      if (this.$vuetify.breakpoint.smAndDown) {
+      if (this.$vuetify.breakpoint.mdAndDown) {
         binding.column = true
       }
 
       return binding
     },
     requestCardBinding () {
-      if (this.$vuetify.breakpoint.smAndDown) {
+      if (this.$vuetify.breakpoint.mdAndDown) {
         return {
-          'margin-bottom' : '10px'
+          'margin-bottom': '10px'
         }
       } else {
         return {
-          'margin-right' : '10px'
+          'margin-right': '10px'
         }
       }
     }

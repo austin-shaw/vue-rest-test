@@ -2,7 +2,7 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline">
-        <span>vue-rest-test</span>
+        <span>Vue Rest Test</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn

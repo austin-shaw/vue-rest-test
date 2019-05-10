@@ -63,7 +63,7 @@
         <v-card class="elevation-2">
           <v-card-text>
             <p>Response</p>
-            <div contenteditable v-if="data && data.length">{{data}}}</div>
+            <div contenteditable v-if="response && response.length">{{response}}}</div>
             <div contenteditable v-if="errors && errors.length">{{errors}}</div>
           </v-card-text>
         </v-card>
@@ -73,7 +73,7 @@
   </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import axios from 'axios'
 import HeaderGrid from '@/components/HeaderGrid.vue'
 import ParameterGrid from '@/components/ParameterGrid.vue'
@@ -86,8 +86,8 @@ export default {
   data () {
     return {
       url: '',
-      data: '',
-      errors: [],
+      response: '',
+      errors: '',
       method: 'GET',
       headers: this.$store.state.headerItems,
       methodItems: [
@@ -102,8 +102,8 @@ export default {
   },
   methods: {
     clear: function () {
-      this.data = ''
-      this.errors = []
+      this.response = ''
+      this.errors = ''
     },
     send: function () {
       this.clear()
@@ -114,10 +114,12 @@ export default {
         // responseType:'stream'
         headers: this.formattedHeaders
       }).then(response => {
-        this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2)
+        // the response doesn't reatin it's formatting unles it has been parsed and re-stringified
+        this.response = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2)
       })
       .catch(e => {
-        this.errors.push(e)
+        // the response doesn't reatin it's formatting unles it has been parsed and re-stringified
+        this.errors = JSON.stringify(JSON.parse(JSON.stringify(e)), null, 2)
       })
     }
   },

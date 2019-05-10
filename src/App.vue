@@ -2,9 +2,9 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline">
-        <span>Vue Rest Test</span>
+        <span>Rest API Test</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <v-btn
         icon
         href="https://github.com/austin-shaw/vue-rest-test"

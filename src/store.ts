@@ -12,7 +12,7 @@ export default new Vuex.Store({
       },
       {
         headerName: 'Origin',
-        headerValue: 'https:\\localhost:8081'
+        headerValue: 'https:\\\localhost:8081'
       }
     ],
     parameterItems: [
@@ -23,16 +23,12 @@ export default new Vuex.Store({
       {
         parameterName: '@AcctLastName',
         parameterValue: 'Baker'
-      },
-      {
-        parameterName: '@AcctFirstName',
-        parameterValue: 'John'
       }
     ]
   },
   getters: {
     formatHeaders: state => {
-      var headersEval = {}
+      let headersEval:{ [index:string] : string } = {};
 
       state.headerItems.forEach(function (value) {
         headersEval[value.headerName] = value.headerValue

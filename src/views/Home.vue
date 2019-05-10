@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       url: '',
-      data: [],
+      data: '',
       errors: [],
       method: 'GET',
       headers: this.$store.state.headerItems,
@@ -102,15 +102,11 @@ export default {
   },
   methods: {
     clear: function () {
-      this.data = []
+      this.data = ''
       this.errors = []
     },
     send: function () {
       this.clear()
-
-      // console.log(this.headers)
-
-      console.log(this.formattedHeaders)
 
       axios({
         method: this.method,
@@ -120,9 +116,9 @@ export default {
       }).then(response => {
         this.data = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2)
       })
-        .catch(e => {
-          this.errors.push(e)
-        })
+      .catch(e => {
+        this.errors.push(e)
+      })
     }
   },
   computed: {

@@ -16,7 +16,7 @@ export default new Vuex.Store({
   },
   getters: {
     formatHeaders: state => {
-      let headersEval:{ [index:string] : string } = {};
+      let headersEval:{ [index:string] : string } = {}
 
       state.headerItems.forEach(function (value) {
         headersEval[value.headerName] = value.headerValue
@@ -28,8 +28,8 @@ export default new Vuex.Store({
       var parametersEval = ''
 
       state.parameterItems.forEach(function (value, index) {
-        let parametersValue : { [index:string] : string } = value;
-        
+        let parametersValue : { [index:string] : string } = value
+
         if (index === 0) {
           parametersEval += '?'
         }

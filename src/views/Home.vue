@@ -95,7 +95,6 @@
       Response Copied to Clipboard
     </v-snackbar>
 
-
     </v-layout>
   </v-container>
 </template>
@@ -143,14 +142,14 @@ export default {
         // the response doesn't reatin it's formatting unles it has been parsed and re-stringified
         this.response = JSON.stringify(JSON.parse(JSON.stringify(response)), null, 2)
       })
-      .catch(e => {
+        .catch(e => {
         // the response doesn't reatin it's formatting unles it has been parsed and re-stringified
-        this.response = JSON.stringify(JSON.parse(JSON.stringify(e)), null, 2)
-      })
+          this.response = JSON.stringify(JSON.parse(JSON.stringify(e)), null, 2)
+        })
     },
-    copy() {
+    copy () {
       navigator.clipboard.writeText(this.response)
-      this.snackbar=true;
+      this.snackbar = true
     }
   },
   computed: {

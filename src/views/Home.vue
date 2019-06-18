@@ -61,13 +61,40 @@
 
       <v-flex xs6 sm6 md6 lg6>
         <v-card class="elevation-2">
+          <v-card-title>
+            Response
+          </v-card-title>
+
+          <v-card-actions>
+            <v-btn
+              outline
+              fab
+              small
+              absolute
+              right
+              color="primary"
+              @click="copy()"
+            >
+              <v-icon>far fa-copy</v-icon>
+            </v-btn>
+          </v-card-actions>
           <v-card-text>
-            <p>Response</p>
+            <!-- <p>Response</p> -->
+
             <div contenteditable v-if="response && response.length">{{response}}}</div>
-            <div contenteditable v-if="errors && errors.length">{{errors}}</div>
           </v-card-text>
         </v-card>
       </v-flex>
+
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      bottom
+      color="primary"
+    >
+      Response Copied to Clipboard
+    </v-snackbar>
+
 
     </v-layout>
   </v-container>
@@ -87,7 +114,6 @@ export default {
     return {
       url: '',
       response: '',
-      errors: '',
       method: 'GET',
       headers: this.$store.state.headerItems,
       methodItems: [
@@ -97,13 +123,14 @@ export default {
         'DELETE',
         'OPTIONS',
         'HEAD'
-      ]
+      ],
+      snackbar: false,
+      timeout: 2500
     }
   },
   methods: {
     clear: function () {
       this.response = ''
-      this.errors = ''
     },
     send: function () {
       this.clear()
@@ -111,7 +138,6 @@ export default {
       axios({
         method: this.method,
         url: this.url + this.formattedParameters,
-        // responseType:'stream'
         headers: this.formattedHeaders
       }).then(response => {
         // the response doesn't reatin it's formatting unles it has been parsed and re-stringified
@@ -119,8 +145,12 @@ export default {
       })
       .catch(e => {
         // the response doesn't reatin it's formatting unles it has been parsed and re-stringified
-        this.errors = JSON.stringify(JSON.parse(JSON.stringify(e)), null, 2)
+        this.response = JSON.stringify(JSON.parse(JSON.stringify(e)), null, 2)
       })
+    },
+    copy() {
+      navigator.clipboard.writeText(this.response)
+      this.snackbar=true;
     }
   },
   computed: {

@@ -9,21 +9,9 @@ export default new Vuex.Store({
       {
         headerName: 'Accept',
         headerValue: 'application/json'
-      },
-      {
-        headerName: 'Origin',
-        headerValue: 'https:\\\localhost:8081'
       }
     ],
     parameterItems: [
-      {
-        parameterName: '@AcctID',
-        parameterValue: '7'
-      },
-      {
-        parameterName: '@AcctLastName',
-        parameterValue: 'Baker'
-      }
     ]
   },
   getters: {
@@ -40,12 +28,13 @@ export default new Vuex.Store({
       var parametersEval = ''
 
       state.parameterItems.forEach(function (value, index) {
-        console.log(index)
+        let parametersValue : { [index:string] : string } = value;
+        
         if (index === 0) {
           parametersEval += '?'
         }
 
-        parametersEval += value.parameterName + '=' + value.parameterValue
+        parametersEval += parametersValue.parameterName + '=' + parametersValue.parameterValue
 
         if (index < state.parameterItems.length - 1) {
           parametersEval += '&'
